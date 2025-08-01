@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Una Galaxia Llamada Tú</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      height: 100%;
+      background: black;
+      color: white;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 100px 20px 60px;
+    }
+
+    h1 {
+      font-family: 'Courgette', cursive;
+      font-size: 3em;
+      color: #ff80ab;
+      margin-bottom: 30px;
+    }
+
+    .typewriter {
+      font-size: 1.3em;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      animation: typing 6s steps(50) 1, blink 0.8s infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .photo img {
+      width: 250px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 128, 171, 0.6);
+      margin: 40px 0;
+    }
+
+    .reveal-button {
+      background: #ff4081;
+      border: none;
+      padding: 15px 30px;
+      color: white;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .reveal-button:hover {
+      background: #f50057;
+    }
+
+    #hiddenMessage {
+      margin-top: 30px;
+      display: none;
+      font-size: 1.2em;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="stars"></canvas>
+
+  <div class="container">
+    <h1>Feliz Día de la Novia 💖</h1>
+
+    <div class="typewriter">
+      “No te enamores de alguien que haga que el mundo sea fácil, enamórate de quien lo haga valer la pena”
+    </div>
+
+    <div class="photo">
+      <img src="https://i.postimg.cc/YqcHZDtv/pareja14enero.jpg" alt="Foto de nosotros">
+    </div>
+
+    <button class="reveal-button" onclick="mostrarMensaje()">
+      14 de enero 💘
+    </button>
+
+    <div id="hiddenMessage">
+      Desde ese día, todo cambió para mí. <br>
+      Gracias por ser parte de mi historia, por cada risa, cada abrazo, cada mirada. <br>
+      Eres mi lugar favorito, mi todo. Te amo más de lo que imaginas.
+    </div>
+
+    <audio autoplay loop>
+      <source src="https://www.dropbox.com/scl/fi/40c4rxapj9z4ffx78h5yd/Afuera-del-Planeta-Manuel-Medrano.mp3?rlkey=nqw4v90vt99a7dc7o7srqsgo1&dl=1" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    function mostrarMensaje() {
+      document.getElementById("hiddenMessage").style.display = "block";
+    }
+
+    // Fondo de estrellas animadas
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = Array(150).fill().map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.2,
+      speed: Math.random() * 0.4 + 0.1
+    }));
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#fff';
+      stars.forEach(star => {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+          star.y = 0;
+          star.x = Math.random() * canvas.width;
+        }
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    drawStars();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
